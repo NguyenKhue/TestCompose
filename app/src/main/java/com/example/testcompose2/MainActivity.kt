@@ -3,6 +3,7 @@ package com.example.testcompose2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -58,12 +59,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import com.example.testcompose2.ui.theme.TestCompose2Theme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
+
         setContent {
             TestCompose2Theme {
                 // A surface container using the 'background' color from the theme
@@ -81,9 +86,9 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        SearchBarSample()
                         TextFieldSearchBarSample()
-                        //UnitTextField(value = state, onValueChange = { state = it }, unit = "cm")
+                        UnitTextField(value = state, onValueChange = { state = it }, unit = "cm")
+                        SearchBarSample()
                     }
                 }
             }
