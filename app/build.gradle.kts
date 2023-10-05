@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -48,6 +50,15 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.sridhar.sp.neumorphic)
+
+    implementation(libs.composeNeumorphism)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.viewModel.compose)
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
