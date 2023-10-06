@@ -53,6 +53,7 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -102,6 +103,7 @@ import com.gandiva.neumorphic.neu
 import com.gandiva.neumorphic.shape.Flat
 import com.gandiva.neumorphic.shape.Oval
 import com.gandiva.neumorphic.shape.Pressed
+import com.gandiva.neumorphic.shape.RoundedCorner
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -148,75 +150,125 @@ class MainActivity : ComponentActivity() {
 
                         composable("screen1") {
 
-                            val x1 = remember { mutableIntStateOf(0) }
-                            var x2 by remember { mutableIntStateOf(0) }
-
-                            LazyColumn(
+                            Column(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .horizontalScroll(rememberScrollState()),
+                                    .verticalScroll(rememberScrollState()),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                item {
-                                    val interactionSource1 = remember { MutableInteractionSource() }
-                                    val interactions =
-                                        remember { mutableStateListOf<Interaction>() }
-                                    var isPressed by remember {
-                                        mutableStateOf(false)
-                                    }
-                                    LaunchedEffect(key1 = isPressed) {
-                                        Log.d("interactionSource11", "isPressed: $isPressed")
-                                    }
-                                    LaunchedEffect(interactionSource1) {
-                                        interactionSource1.interactions.collect { interaction ->
-                                            when (interaction) {
-                                                is PressInteraction.Press -> {
-                                                    isPressed = true
-                                                    Log.d(
-                                                        "interactionSource11",
-                                                        "Press: $isPressed"
-                                                    )
-                                                    interactions.add(interaction)
-                                                }
+                                val interactionSource1 = remember { MutableInteractionSource() }
+                                val interactions =
+                                    remember { mutableStateListOf<Interaction>() }
+                                var isPressed by remember {
+                                    mutableStateOf(false)
+                                }
+//                                LaunchedEffect(key1 = isPressed) {
+//                                    Log.d("interactionSource1", "isPressed: $isPressed")
+//                                }
+//                                LaunchedEffect(interactionSource1) {
+//                                    interactionSource1.interactions.collect { interaction ->
+//                                        when (interaction) {
+//                                            is PressInteraction.Press -> {
+//                                                isPressed = true
+//                                                Log.d(
+//                                                    "interactionSource1",
+//                                                    "Press: $isPressed"
+//                                                )
+//                                                interactions.add(interaction)
+//                                            }
+//
+//                                            is PressInteraction.Release -> {
+//                                                isPressed = false
+//                                                Log.d(
+//                                                    "interactionSource1",
+//                                                    "Release: $isPressed"
+//                                                )
+//                                                interactions.remove(interaction.press)
+//                                            }
+//
+//                                            is PressInteraction.Cancel -> {
+//                                                isPressed = false
+//                                                Log.d(
+//                                                    "interactionSource1",
+//                                                    "Cancel: $isPressed"
+//                                                )
+//                                                interactions.remove(interaction.press)
+//                                            }
+//                                        }
+//                                    }
+//                                }
 
-                                                is PressInteraction.Release -> {
-                                                    isPressed = false
-                                                    Log.d(
-                                                        "interactionSource11",
-                                                        "Release: $isPressed"
-                                                    )
-                                                    interactions.remove(interaction.press)
-                                                }
-
-                                                is PressInteraction.Cancel -> {
-                                                    isPressed = false
-                                                    Log.d(
-                                                        "interactionSource11",
-                                                        "Cancel: $isPressed"
-                                                    )
-                                                    interactions.remove(interaction.press)
-                                                }
+                                Card(modifier = Modifier
+                                    .size(100.dp)
+                                    .pointerInput(Unit) {
+                                        detectTapAndPress(
+                                            onPress = {
+                                                isPressed = true
+                                                Log.d(
+                                                    "detectTapAndPress",
+                                                    "onPress"
+                                                )
+                                            },
+                                            onTap = {
+                                                isPressed = false
+                                                Log.d(
+                                                    "detectTapAndPress",
+                                                    "onTap"
+                                                )
+                                            },
+                                            onCancel = {
+                                                isPressed = false
+                                                Log.d(
+                                                    "detectTapAndPress",
+                                                    "onCancel"
+                                                )
                                             }
-                                        }
+                                        )
                                     }
-                                    Button(
-                                        modifier = Modifier
-                                            .neu(
-                                                lightShadowColor = AppColors.lightShadow(),
-                                                darkShadowColor = AppColors.darkShadow(),
-                                                shadowElevation = 6.dp,
-                                                lightSource = LightSource.LEFT_TOP,
-                                                shape = if (isPressed) Pressed(Oval) else Flat(Oval),
-                                            ),
-                                        interactionSource = interactionSource1,
-                                        onClick = {
-                                            x2++
-                                            x1.intValue++
-                                        }) {
-                                        Text(text = "Click me $isPressed")
-                                    }
+                                    .neu(
+                                        lightShadowColor = AppColors.lightShadow(),
+                                        darkShadowColor = AppColors.darkShadow(),
+                                        shadowElevation = 6.dp,
+                                        lightSource = LightSource.LEFT_TOP,
+                                        shape = if (isPressed) Pressed(RoundedCorner(24.dp)) else Flat(RoundedCorner(24.dp)),
+                                    ),
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                    shape = RoundedCornerShape(24.dp)
+                                ) {
+
+                                }
+
+                                Button(
+                                    modifier = Modifier.pointerInput(Unit) {
+                                              detectTapAndPress(
+                                                  onPress = {
+                                                      isPressed = true
+                                                      Log.d(
+                                                          "detectTapAndPress",
+                                                          "onPress"
+                                                      )
+                                                  },
+                                                  onTap = {
+                                                      isPressed = false
+                                                      Log.d(
+                                                          "detectTapAndPress",
+                                                          "onTap"
+                                                      )
+                                                  },
+                                                  onCancel = {
+                                                      isPressed = false
+                                                      Log.d(
+                                                          "detectTapAndPress",
+                                                          "onCancel"
+                                                      )
+                                                  }
+                                              )
+                                    },
+                                    onClick = {}
+                                ) {
+                                    Text(text = "Click me $isPressed")
                                 }
                             }
                         }
@@ -424,7 +476,8 @@ fun SearchBarSample() {
 
 suspend fun PointerInputScope.detectTapAndPress(
     onPress: (Offset) -> Unit,
-    onTap: ((Offset) -> Unit)? = null
+    onTap: ((Offset) -> Unit)? = null,
+    onCancel: () -> Unit
 ) {
     coroutineScope {
         awaitEachGesture {
@@ -432,10 +485,11 @@ suspend fun PointerInputScope.detectTapAndPress(
             launch { onPress(down.position) }
 
             val up = waitForUpOrCancellation()
+
             if (up != null) {
                 if (up.pressed != up.previousPressed) up.consume()
                 onTap?.invoke(up.position)
-            }
+            } else onCancel()
         }
     }
 }
