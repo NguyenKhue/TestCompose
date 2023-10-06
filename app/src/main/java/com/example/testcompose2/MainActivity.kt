@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -113,6 +114,7 @@ import me.nikhilchaudhari.library.neumorphic
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -157,48 +159,9 @@ class MainActivity : ComponentActivity() {
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-
-                                val interactionSource1 = remember { MutableInteractionSource() }
-                                val interactions =
-                                    remember { mutableStateListOf<Interaction>() }
                                 var isPressed by remember {
                                     mutableStateOf(false)
                                 }
-//                                LaunchedEffect(key1 = isPressed) {
-//                                    Log.d("interactionSource1", "isPressed: $isPressed")
-//                                }
-//                                LaunchedEffect(interactionSource1) {
-//                                    interactionSource1.interactions.collect { interaction ->
-//                                        when (interaction) {
-//                                            is PressInteraction.Press -> {
-//                                                isPressed = true
-//                                                Log.d(
-//                                                    "interactionSource1",
-//                                                    "Press: $isPressed"
-//                                                )
-//                                                interactions.add(interaction)
-//                                            }
-//
-//                                            is PressInteraction.Release -> {
-//                                                isPressed = false
-//                                                Log.d(
-//                                                    "interactionSource1",
-//                                                    "Release: $isPressed"
-//                                                )
-//                                                interactions.remove(interaction.press)
-//                                            }
-//
-//                                            is PressInteraction.Cancel -> {
-//                                                isPressed = false
-//                                                Log.d(
-//                                                    "interactionSource1",
-//                                                    "Cancel: $isPressed"
-//                                                )
-//                                                interactions.remove(interaction.press)
-//                                            }
-//                                        }
-//                                    }
-//                                }
 
                                 Card(modifier = Modifier
                                     .size(100.dp)
