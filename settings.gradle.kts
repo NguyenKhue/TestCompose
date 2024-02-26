@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TestCompose2"
 include(":app")
- 
+include(":mylibrary")

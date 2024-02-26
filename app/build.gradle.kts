@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dependencyGuard)
 }
 
 android {
@@ -52,6 +53,7 @@ android {
 dependencies {
 
     implementation(libs.sridhar.sp.neumorphic)
+    implementation(libs.androidx.ui.util)
 
     implementation(libs.composeNeumorphism)
 
@@ -75,4 +77,10 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+}
+
+dependencyGuard {
+    configuration("debugRuntimeClasspath")
+
+    configuration("releaseRuntimeClasspath")
 }
